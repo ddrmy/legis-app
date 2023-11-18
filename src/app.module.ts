@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LegisModule } from './module/legis.module';
+import { PythonModule } from './module/python.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { LegisModule } from './module/legis.module';
       'mongodb+srv://dbNatJuri:dbNatJuriPassword@ddrmy.bg5wlap.mongodb.net/nat-juri?retryWrites=true&w=majority',
     ),
     LegisModule,
+    PythonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
