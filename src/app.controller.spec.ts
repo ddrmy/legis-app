@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 //src/app.controller.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
