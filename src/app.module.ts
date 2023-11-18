@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 // src/app.module.ts
 
 import { Module } from '@nestjs/common';
@@ -10,7 +11,7 @@ import { PythonModule } from './module/python.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb+srv://dbNatJuri:dbNatJuriPassword@ddrmy.bg5wlap.mongodb.net/?retryWrites=true&w=majority',
+      'mongodb+srv://dbNatJuri:dbNatJuriPassword@ddrmy.bg5wlap.mongodb.net/nat-juri?retryWrites=true&w=majority',
     ),
     LegisModule,
     PythonModule,

@@ -1,7 +1,9 @@
+/* eslint-disable prettier/prettier */
+//src/model/legis.model.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-@Schema()
+@Schema({collection: 'legis-data'})
 export class Legis extends Document {
   @Prop({ required: true })
   titulo: string;
@@ -10,7 +12,7 @@ export class Legis extends Document {
   descricao: string;
 
   @Prop({ required: true })
-  ano: string;
+  ano: Date;
 }
 
 export const LegisSchema = SchemaFactory.createForClass(Legis);

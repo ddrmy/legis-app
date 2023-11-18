@@ -1,17 +1,17 @@
 /* eslint-disable prettier/prettier */
-// src/controller/python.controller.ts
+// src/controller/python.codigo.ts
 import { Controller, Get, Res } from '@nestjs/common';
 import axios from 'axios';
+import * as cheerio from 'cheerio';
 import { Response } from 'express';
-import { MongoClient, MongoClientOptions } from 'mongodb';
 import * as iconv from 'iconv-lite';
-import * as cheerio from 'cheerio'; // Adicione esta linha
+import { MongoClient, MongoClientOptions } from 'mongodb';
 
 @Controller()
-export class PythonController {
-  @Get('/run-python-script')
-  async executePythonScript(@Res() response: Response) {
-    const url = 'http://www.planalto.gov.br/ccivil_03/Leis/2002/L10406.htm';
+export class CodigoCivil {
+  @Get('/run-codigo-civil')
+  async executeCodigoCivil(@Res() response: Response) {
+    const url = 'http://www.planalto.gov.br/ccivil_03/Leis/2002/L10406.htm'; // Codigo Civil
     const mongoURI = 'mongodb+srv://dbNatJuri:dbNatJuriPassword@ddrmy.bg5wlap.mongodb.net/?retryWrites=true&w=majority';
     const dbName = 'nat-juri'; // Nome do banco de dados
     const collectionName = 'legis-data'; // Nome da coleção
@@ -36,20 +36,20 @@ export class PythonController {
       const pageContentBuffer = Buffer.from(res.data, 'binary');
       const pageContent = iconv.decode(pageContentBuffer, 'ISO-8859-1');
 
-      // Use Cheerio para manipulação do HTML
+      // Use cheerio para manipulação do DOM
       const $ = cheerio.load(pageContent);
 
-      // Tratativas para remoção de tags específicas
-      $("strike").remove();
-      $("[style*='text-decoration:line-through']").remove();
-      $("span[style*='text-decoration:line-through']").remove();
-      $("li:empty").remove();
-      $("del").remove();
-      $("a").attr("href", "#");
-      $("table").remove();
+      // Aplicar as tratativas de limpeza aqui
+      $('strike').remove();
+      $('[style*="text-decoration:line-through"]').remove();
+      $('span[style*="text-decoration:line-through"]').remove();
+      $('li:empty').remove();
+      $('del').remove();
+      $('a').attr('href', '#');
+      $('table').remove();
 
-      // Novo conteúdo HTML tratado
-      const treatedPageContent = $.html();
+      // Obtenha o conteúdo tratado
+      const cleanedContent = $.html();
 
       // Salva os dados no MongoDB
       const client = new MongoClient(mongoURI, {
@@ -70,8 +70,8 @@ export class PythonController {
         });
 
         const documento = {
-          titulo: 'Teste de request', // Título personalizado
-          descricao: treatedPageContent, // Conteúdo HTML da página tratado
+          titulo: 'codigo-civil', // Título personalizado
+          descricao: cleanedContent, // Conteúdo HTML da página
           ano: formattedDate,
         };
 
