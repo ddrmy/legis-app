@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 // src/legis/legis.service.ts
 
 import { Injectable } from '@nestjs/common';
@@ -9,13 +10,34 @@ import { Legis } from '../model/legis.model';
 export class LegisService {
   constructor(@InjectModel(Legis.name) private legisModel: Model<Legis>) {}
 
-  async create(createLegisDto) {
+  async create(createLegisDto: any) {
     const createdLegis = new this.legisModel(createLegisDto);
     return createdLegis.save();
   }
 
   async findAll() {
     return this.legisModel.find().exec();
+  }
+
+  async findLatestLegisData() {
+    try {
+      const latestLegis = await this.legisModel
+        .find()
+        .sort({ ano: -1 }) // Ordena em ordem decrescente com base na data
+        .limit(1)          // Limita o resultado a 1 documento
+        .exec();
+  
+      return latestLegis;
+    } catch (error) {
+      // Lide com o erro, se necessário
+      console.error('Erro ao buscar a legislação mais recente:', error);
+      throw error;
+    }
+  }
+
+  async createLegis(createLegisDto: any) {
+    const createdLegis = new this.legisModel(createLegisDto);
+    return createdLegis.save();
   }
 
   async findOne(id: string) {
