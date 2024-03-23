@@ -9,15 +9,17 @@ import { Legis } from '../model/legis.model';
 @Injectable()
 export class LegisService {
   constructor(@InjectModel(Legis.name) private legisModel: Model<Legis>) {}
-
-  async create(createLegisDto: any) {
-    const createdLegis = new this.legisModel(createLegisDto);
-    return createdLegis.save();
-  }
-
+  
   async findAll() {
     return this.legisModel.find().exec();
   }
+  
+
+    async create(createLegisDto: any) {
+      const createdLegis = new this.legisModel(createLegisDto);
+      return createdLegis.save();
+    }
+
 
   async findLatestLegisData() {
     try {
