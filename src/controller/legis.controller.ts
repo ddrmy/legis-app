@@ -8,11 +8,6 @@ import { LegisService } from '../service/legis.service';
 export class LegisController {
   constructor(private readonly legisService: LegisService) {}
 
-  // @Post('create/legis')
-  // create(@Body() createLegisDto) {
-  //   return this.legisService.create(createLegisDto);
-  // }
-
   @Get('get/legis')
   getAll() {
     return this.legisService.findAll();
